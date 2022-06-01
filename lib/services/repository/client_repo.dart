@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:zeus_api/services/api/model/client_model.dart';
 
-import '../api/model/auth_model.dart';
 import '../api/networking.dart';
 import '../response.dart';
 

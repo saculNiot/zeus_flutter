@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:http/http.dart' as http;
-import 'package:http_parser/http_parser.dart';
 import 'dart:convert';
-import 'package:path/path.dart';
-import 'package:async/async.dart';
 import 'package:zeus_api/utils/constants.dart';
 import 'dart:io';
 //import 'package:xml2json/xml2json.dart';
@@ -154,28 +151,4 @@ class Networking {
     }
   }
 
-  Future multiPartRequest(File imageFile) async {
-    var stream =
-        new http.ByteStream(DelegatingStream.typed(imageFile.openRead()));
-    var length = await imageFile.length();
-
-    var uri = Uri.parse(url);
-
-    var request = new http.MultipartRequest("POST", uri);
-    var multipartFile = new http.MultipartFile(
-      'picture',
-      stream,
-      length,
-      filename: basename(imageFile.path),
-      contentType: new MediaType('image', 'jpg'),
-    );
-
-    request.files.add(multipartFile);
-    http.Response response =
-        await http.Response.fromStream(await request.send());
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    }
-  }
 }

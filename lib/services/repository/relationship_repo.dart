@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:zeus_api/services/api/model/client_model.dart';
 import 'package:zeus_api/services/api/model/relationship_model.dart';
 
-import '../api/model/auth_model.dart';
 import '../api/networking.dart';
 import '../response.dart';
 
@@ -98,6 +97,22 @@ class RelationshipRepo {
 
     if (response.isSuccess) {
       return Response(true, message: '', data: response.data);
+    } else if (response.message.contains('No records')) {
+      return Response(false, message: 'No records');
+    }
+
+    return Response(false, message: response.message);
+  }
+
+  Future<Response> isAuthorized(
+      {accessToken, clientId, roleId, permission}) async {
+    Map<String, String> headers = {'Authorization': 'Bearer $accessToken'};
+    String path = "clientId=$clientId&roleId=$roleId&permission=$permission";
+    var response =
+        await networking.getData(path: 'is_authorized?$path', headers: headers);
+
+    if (response.isSuccess && response.data != null) {
+      return Response(true, data: response.data, message: '');
     } else if (response.message.contains('No records')) {
       return Response(false, message: 'No records');
     }

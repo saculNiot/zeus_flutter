@@ -1,7 +1,6 @@
 name: zeus_api
-description: A new Flutter package project.
+description: Zeus API Flutter Implementation.
 version: 0.0.1
-homepage:
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
