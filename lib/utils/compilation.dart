@@ -34,8 +34,7 @@ class APICompile {
   }
 
   static Future<Map<String, dynamic>?> refreshToken({refreshToken}) async {
-    var result =
-        await authRepo.refreshToken(refreshToken: refreshToken);
+    var result = await authRepo.refreshToken(refreshToken: refreshToken);
 
     if (result.isSuccess) {
       Map<String, dynamic>? map = <String, dynamic>{};
@@ -220,6 +219,33 @@ class APICompile {
         permission: permission,
         role: role,
         client: client);
+
+    if (result.isSuccess) {
+      return result.data;
+    } else {
+      print(result.message);
+      return null;
+    }
+  }
+
+  static Future<String?> saveRelationshipABAC(
+      {accessToken,
+      createdById,
+      clientRoleRelId,
+      permission,
+      client,
+      role,
+      clientAttribute,
+      roleAttribute}) async {
+    var result = await relationshipRepo.saveRelationshipABAC(
+        accessToken: accessToken,
+        createdById: createdById,
+        clientRoleRelId: clientRoleRelId,
+        permission: permission,
+        role: role,
+        client: client,
+        clientAttribute: clientAttribute,
+        roleAttribute: roleAttribute);
 
     if (result.isSuccess) {
       return result.data;

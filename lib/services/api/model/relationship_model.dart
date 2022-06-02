@@ -31,6 +31,8 @@ class Relationship {
   String? createdById;
   dynamic role;
   dynamic client;
+  dynamic roleAttribute;
+  dynamic clientAttribute;
 
   Relationship(
       {this.clientRoleRelId,
@@ -38,7 +40,9 @@ class Relationship {
       this.createdDateTime,
       this.createdById,
       this.role,
-      this.client});
+      this.client,
+      this.roleAttribute,
+      this.clientAttribute});
 
   Relationship.fromJson(Map<String, dynamic> json) {
     clientRoleRelId = json['client_role_rel_id'];
@@ -64,6 +68,8 @@ class Relationship {
     data['createdDateTime'] = createdDateTime;
     data['client'] = client;
     data['role'] = role;
+    data['roleAttribute'] = roleAttribute;
+    data['clientAttribute'] = clientAttribute;
     return data;
   }
 }

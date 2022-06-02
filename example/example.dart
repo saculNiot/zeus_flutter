@@ -156,6 +156,20 @@ class _MyHomePageState extends State<MyHomePage> {
     print(_response);
   }
 
+    Future<void> saveRelationshipABAC() async {
+    String? relationship = await ZeusControl.saveRelationshipABAC(
+        accessToken: _accessToken,
+        clientRoleRelId: "relationship id",
+        createdById: "user id",
+        permission: "viewer",
+        client: "client id",
+        role: "role id"
+        clientAttribute: [],
+        roleAttribute: []);
+    _response = relationship!;
+    print(_response);
+  }
+
   Future<void> deleteRelationship() async {
     String? isDeleted = await ZeusControl.deleteRelationship(
         accessToken: _accessToken, clientRoleRelId: "relationship id");
@@ -241,6 +255,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
                 onPressed: () => {(saveRelationship())},
                 child: Text("Save Relationships")),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () => {(saveRelationshipABAC())},
+                child: Text("Save Relationships ABAC")),
             const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () => {(deleteRelationship())},

@@ -28,7 +28,7 @@ class ZeusControl {
           name: name,
           attribute: attribute,
           clientId: clientId);
-          
+
   static Future<String?> deleteClient({accessToken, clientId}) async =>
       await APICompile.deleteClient(
           accessToken: accessToken, clientId: clientId);
@@ -38,6 +38,7 @@ class ZeusControl {
 
   static Future<List<Role>?> getRoleById({accessToken, roleId}) async =>
       await APICompile.getRoleById(accessToken: accessToken, roleId: roleId);
+
   static Future<String?> saveRole(
           {accessToken, createdById, name, attribute, roleId}) async =>
       await APICompile.saveRole(
@@ -46,6 +47,7 @@ class ZeusControl {
           name: name,
           attribute: attribute,
           roleId: roleId);
+
   static Future<String?> deleteRole({accessToken, roleId}) async =>
       await APICompile.deleteRole(accessToken: accessToken, roleId: roleId);
 
@@ -71,6 +73,25 @@ class ZeusControl {
           permission: permission,
           client: client,
           role: role);
+
+  static Future<String?> saveRelationshipABAC(
+          {accessToken,
+          createdById,
+          clientRoleRelId,
+          permission,
+          client,
+          role,
+          clientAttribute,
+          roleAttribute}) async =>
+      await APICompile.saveRelationshipABAC(
+          accessToken: accessToken,
+          createdById: createdById,
+          clientRoleRelId: clientRoleRelId,
+          permission: permission,
+          client: client,
+          role: role,
+          clientAttribute: clientAttribute,
+          roleAttribute: roleAttribute);
 
   static Future<String?> deleteRelationship(
           {accessToken, clientRoleRelId}) async =>

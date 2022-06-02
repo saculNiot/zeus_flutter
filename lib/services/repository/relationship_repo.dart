@@ -80,6 +80,44 @@ class RelationshipRepo {
     return Response(false, message: response.message);
   }
 
+  Future<Response> saveRelationshipABAC({
+    accessToken,
+    createdById,
+    clientRoleRelId,
+    permission,
+    client,
+    role,
+    clientAttribute,
+    roleAttribute,
+  }) async {
+    Relationship relationship = Relationship(
+        createdById: createdById,
+        clientRoleRelId: clientRoleRelId,
+        permission: permission,
+        client: client,
+        role: role,
+        clientAttribute: clientAttribute,
+        roleAttribute: roleAttribute);
+    String body = jsonEncode(relationship);
+
+    String api = 'save_relationship_abac';
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $accessToken'
+    };
+
+    var response =
+        await networking.postData(api: api, body: body, headers: headers);
+
+    if (response.isSuccess) {
+      return Response(true, message: '', data: response.data);
+    } else if (response.message.contains('No records')) {
+      return Response(false, message: 'No records');
+    }
+
+    return Response(false, message: response.message);
+  }
+
   Future<Response> deleteRelationship({accessToken, clientRoleRelId}) async {
     Relationship relationship = Relationship(
       clientRoleRelId: clientRoleRelId,
