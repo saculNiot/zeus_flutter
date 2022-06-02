@@ -33,6 +33,23 @@ class APICompile {
     }
   }
 
+  static Future<Map<String, dynamic>?> refreshToken({refreshToken}) async {
+    var result =
+        await authRepo.refreshToken(refreshToken: refreshToken);
+
+    if (result.isSuccess) {
+      Map<String, dynamic>? map = <String, dynamic>{};
+      map["access"] = result.data["access"];
+
+      return {
+        "access": result.data["access"],
+      };
+    } else {
+      print(result.message);
+      return null;
+    }
+  }
+
   static Future<List<Client>?> getAllClients({accessToken}) async {
     List<Client> clients = [];
     var result = await clientRepo.getAllClients(accessToken: accessToken);

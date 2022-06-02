@@ -10,12 +10,16 @@ class ZeusControl {
   static Future<Map<String, dynamic>?> getTokens({email, password}) async =>
       (await APICompile.getAccessToken(email: email, password: password));
 
+  static Future<Map<String, dynamic>?> refreshToken({refreshToken}) async =>
+      (await APICompile.refreshToken(refreshToken: refreshToken));
+
   static Future<List<Client>?> getAllClients({accessToken}) async =>
       (await APICompile.getAllClients(accessToken: accessToken));
 
   static Future<List<Client>?> getClientById({accessToken, clientId}) async =>
       await APICompile.getClientById(
           accessToken: accessToken, clientId: clientId);
+
   static Future<String?> saveClient(
           {accessToken, createdById, name, attribute, clientId}) async =>
       await APICompile.saveClient(
@@ -24,6 +28,7 @@ class ZeusControl {
           name: name,
           attribute: attribute,
           clientId: clientId);
+          
   static Future<String?> deleteClient({accessToken, clientId}) async =>
       await APICompile.deleteClient(
           accessToken: accessToken, clientId: clientId);

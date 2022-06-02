@@ -35,10 +35,21 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   String _response = "";
   String _accessToken = "";
+  String _refreshToken = "";
 
   Future<void> getAccessToken() async {
     var tokens = await ZeusControl.getTokens(
         email: "email@domain.com", password: "123456");
+    _response = "Tokens are retrieved";
+    setState(() {
+      _accessToken = tokens!["access"];
+      _refreshToken = tokens["refresh"];
+    });
+    print(_response);
+  }
+
+  Future<void> refreshToken() async {
+    var tokens = await ZeusControl.refreshToken(refreshToken: _refreshToken);
     _response = "Tokens are retrieved";
     setState(() {
       _accessToken = tokens!["access"];
@@ -56,8 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> getClientById() async {
     List<Client>? clients = await ZeusControl.getClientById(
-        accessToken: _accessToken,
-        clientId: "id");
+        accessToken: _accessToken, clientId: "id");
     _response = clients![0].name!;
     print(_response);
   }
@@ -78,8 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> deleteClient() async {
     String? isDeleted = await ZeusControl.deleteClient(
-        accessToken: _accessToken,
-        clientId: "client id");
+        accessToken: _accessToken, clientId: "client id");
     _response = isDeleted!;
     print(_response);
   }
@@ -94,8 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> getRoleById() async {
     List<Role>? roles = await ZeusControl.getRoleById(
-        accessToken: _accessToken,
-        roleId: "role id");
+        accessToken: _accessToken, roleId: "role id");
     _response = roles![0].name!;
     print(_response);
   }
@@ -116,8 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> deleteRole() async {
     String? isDeleted = await ZeusControl.deleteRole(
-        accessToken: _accessToken,
-        roleId: "role id");
+        accessToken: _accessToken, roleId: "role id");
     _response = isDeleted!;
     print(_response);
   }
@@ -132,8 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> getRelationshipById() async {
     List<Relationship>? relationships = await ZeusControl.getRelationshipById(
-        accessToken: _accessToken,
-        clientRoleRelId: "relationship id");
+        accessToken: _accessToken, clientRoleRelId: "relationship id");
     _response = relationships![0].clientRoleRelId!;
     print(_response);
   }
@@ -152,8 +158,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> deleteRelationship() async {
     String? isDeleted = await ZeusControl.deleteRelationship(
-        accessToken: _accessToken,
-        clientRoleRelId: "relationship id");
+        accessToken: _accessToken, clientRoleRelId: "relationship id");
     _response = isDeleted!;
     print(_response);
   }
@@ -190,6 +195,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ElevatedButton(
                 onPressed: () => {getAccessToken()},
                 child: Text("Get Access Token")),
+            const SizedBox(height: 10),
+            ElevatedButton(
+                onPressed: () => {refreshToken()},
+                child: Text("Refresh Token")),
             const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () => {getAllClients()},

@@ -26,4 +26,23 @@ class AuthRepo {
 
     return Response(false, message: response.message);
   }
+  Future<Response> refreshToken({
+    refreshToken,
+  }) async {
+    String body = jsonEncode({"refresh": refreshToken});
+    print(body);
+    String api = 'api/token/refresh/';
+    Map<String, String> headers = {'Content-Type': 'application/json'};
+
+    var response =
+        await networking.postData(api: api, body: body, headers: headers);
+
+    if (response.isSuccess) {
+      return Response(true, message: '', data: response.data);
+    } else if (response.message.contains('No records')) {
+      return Response(false, message: 'No records');
+    }
+
+    return Response(false, message: response.message);
+  }
 }
